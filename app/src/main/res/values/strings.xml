@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">FitnessTracker</string>
+
+    <string name="empty_homeScreenTitle">You don’t have any workouts currently</string>
+    <string name="empty_homeScreenSubtitle">Create your first workout to start training</string>
+
+    <string name="btnCreateFirstWorkout">Create your first workout</string>
+    <string name="btnAddNewWorkout">Add New Workout</string>
+
+
+
+
+
+    // Descriptions
+    <string name="navExercisesBtnDescription">Exercises</string>
+    <string name="navHomeBtnDescription">Home</string>
+    <string name="navAboutBtnDescription">About</string>
+
 </resources>
