@@ -1,7 +1,5 @@
 package com.example.fitnesstracker.ui.components
 
-import android.os.Debug
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -17,8 +15,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,15 +23,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fitnesstracker.FitnessTrackerScreen
 import com.example.fitnesstracker.R
-import com.example.fitnesstracker.data.NavbarState
 import com.example.fitnesstracker.ui.components.subComponents.Placement
 import com.example.fitnesstracker.ui.components.subComponents.Shadow
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
-import com.example.fitnesstracker.ui.viewmodel.NavBarViewModel
 
 @Composable
-fun NavBar(onClickBtnExercise: () -> Unit, onClickBtnHome: () -> Unit, onClickBtnAbout: () -> Unit,modifier: Modifier = Modifier, navBarViewModel: NavBarViewModel = NavBarViewModel()) {
-    val navbarState by navBarViewModel.navbarState.collectAsState()
+fun NavBar(onClickBtnExercise: () -> Unit, onClickBtnHome: () -> Unit, onClickBtnAbout: () -> Unit,modifier: Modifier = Modifier, currentScreen: FitnessTrackerScreen /*navBarViewModel: NavBarViewModel = NavBarViewModel()*/) {
 
     Column (
         modifier = modifier
@@ -54,35 +47,26 @@ fun NavBar(onClickBtnExercise: () -> Unit, onClickBtnHome: () -> Unit, onClickBt
 
             CustomIconButton(
                 screen = FitnessTrackerScreen.Exercises,
-                onClick = {
-                    onClickBtnExercise()
-                    navBarViewModel.setCurrentScreen(FitnessTrackerScreen.Exercises)
-                },
+                onClick = onClickBtnExercise,
                 icon = R.drawable.folder,
                 description = R.string.navExercisesBtnDescription,
-                navbarState = navbarState
+                currentScreen = currentScreen
             )
 
             CustomIconButton(
                 screen = FitnessTrackerScreen.Home,
-                onClick = {
-                    onClickBtnHome()
-                    navBarViewModel.setCurrentScreen(FitnessTrackerScreen.Home)
-                },
+                onClick = onClickBtnHome,
                 icon = R.drawable.home,
                 description = R.string.navHomeBtnDescription,
-                navbarState = navbarState
+                currentScreen = currentScreen
             )
 
             CustomIconButton(
                 screen = FitnessTrackerScreen.About,
-                onClick = {
-                    onClickBtnAbout()
-                    navBarViewModel.setCurrentScreen(FitnessTrackerScreen.About)
-                },
+                onClick = onClickBtnAbout,
                 icon = R.drawable.user,
                 description = R.string.navAboutBtnDescription,
-                navbarState = navbarState
+                currentScreen = currentScreen
             )
         }
     }
@@ -90,19 +74,23 @@ fun NavBar(onClickBtnExercise: () -> Unit, onClickBtnHome: () -> Unit, onClickBt
 }
 
 @Composable
-fun CustomIconButton(screen: FitnessTrackerScreen,onClick: () -> Unit, @DrawableRes icon: Int, @StringRes description: Int, navbarState: NavbarState) {
+fun CustomIconButton(
+    screen: FitnessTrackerScreen, onClick: () -> Unit,
+    @DrawableRes icon: Int,
+    @StringRes description: Int,
+    currentScreen: FitnessTrackerScreen) {
     IconButton(
         onClick = onClick
     ) {
         Icon(
             painter = painterResource(icon),
             contentDescription = stringResource(description),
-            tint =  if(navbarState.currentScreen == screen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary,
+            tint =  if(currentScreen == screen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.inversePrimary,
             modifier = Modifier.size(32.dp)
 
         )
     }
-    Log.println(Log.DEBUG,"navbar", "Current Screen: " + navbarState.currentScreen)
+    //Log.println(Log.DEBUG,"navbar", "Current Screen: " + navbarState.currentScreen)
 }
 
 @Preview

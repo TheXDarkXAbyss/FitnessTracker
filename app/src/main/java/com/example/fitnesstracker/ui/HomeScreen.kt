@@ -24,7 +24,6 @@ import com.example.fitnesstracker.ui.theme.White
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-
     Column (
         modifier = modifier
             .fillMaxSize(),

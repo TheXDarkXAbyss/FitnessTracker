@@ -2,7 +2,7 @@ package com.example.fitnesstracker.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.example.fitnesstracker.FitnessTrackerScreen
-import com.example.fitnesstracker.data.NavbarState
+import com.example.fitnesstracker.data.state.NavbarState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,4 +1,4 @@
-package com.example.fitnesstracker.data
+package com.example.fitnesstracker.data.state
 
 import com.example.fitnesstracker.FitnessTrackerScreen
 
