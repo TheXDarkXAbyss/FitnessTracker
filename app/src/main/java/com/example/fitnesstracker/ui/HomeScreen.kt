@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +25,12 @@ import com.example.fitnesstracker.ui.theme.White
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
+    //EmptyHomeScreen(modifier)
+    HomeScreenWithContent(modifier)
+}
+
+@Composable
+fun EmptyHomeScreen(modifier: Modifier = Modifier) {
     Column (
         modifier = modifier
             .fillMaxSize(),
@@ -64,7 +71,13 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         }
 
     }
+}
 
+@Composable
+fun HomeScreenWithContent( modifier: Modifier = Modifier) {
+    LazyColumn() {
+
+    }
 }
 
 @Preview
