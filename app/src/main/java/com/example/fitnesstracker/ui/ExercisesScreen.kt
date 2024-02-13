@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fitnesstracker.R
-import com.example.fitnesstracker.data.Muscle
+//import com.example.fitnesstracker.data.Muscle
 import com.example.fitnesstracker.ui.components.MuscleCard
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 
@@ -36,7 +36,7 @@ fun ExercisesScreen(onCardClick: () -> Unit, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.padding(top = 16.dp)
     ) {
-        val muscles = Muscle().getAll()
+        /*val muscles = Muscle().getAll()
 
         items(muscles) {
             MuscleCard(
@@ -46,7 +46,7 @@ fun ExercisesScreen(onCardClick: () -> Unit, modifier: Modifier = Modifier) {
                 icon = R.drawable.user,
                 muscleName = it,
                 numberOfExercises = 10)
-        }
+        }*/
     }
 }
 

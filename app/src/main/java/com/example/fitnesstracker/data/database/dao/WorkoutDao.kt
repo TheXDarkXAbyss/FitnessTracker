@@ -8,7 +8,7 @@ import com.example.fitnesstracker.data.database.entitie.Workout
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface Workout {
+interface WorkoutDao {
 
     @Upsert
     suspend fun upsert(workout: Workout)
@@ -16,10 +16,10 @@ interface Workout {
     @Delete
     suspend fun delete(workout: Workout)
 
-    @Query("SELECT * FROM workout")
+    @Query("SELECT * FROM workouts")
     fun getAll(): Flow<List<Workout>>
 
-    @Query("SELECT * FROM workout WHERE id = :id")
+    @Query("SELECT * FROM workouts WHERE id = :id")
     fun getById(id: Int): Flow<Workout>
 
 }
