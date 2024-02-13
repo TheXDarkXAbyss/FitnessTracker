@@ -1,9 +1,9 @@
-package com.example.fitnesstracker.data.database.entities
+package com.example.fitnesstracker.data.database.entitie
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "muscle")
+@Entity(tableName = "muscles")
 data class Muscle(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
