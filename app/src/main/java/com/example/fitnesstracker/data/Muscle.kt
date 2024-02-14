@@ -1,4 +1,5 @@
 package com.example.fitnesstracker.data
+/*
 class Muscle {
 
     private val muscleList: List<String> = listOf(
@@ -12,4 +13,4 @@ class Muscle {
         return muscleList
     }
 
-}
+}*/
