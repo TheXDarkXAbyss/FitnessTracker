@@ -1,4 +1,4 @@
-package com.example.fitnesstracker.extratools
+package com.example.fitnesstracker.ui.extratools
 
 import android.annotation.SuppressLint
 import androidx.compose.ui.Modifier

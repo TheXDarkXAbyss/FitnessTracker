@@ -1,6 +1,5 @@
 package com.example.fitnesstracker.ui.components
 
-import android.icu.text.ListFormatter.Width
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,30 +17,23 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.vector.VectorProperty
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fitnesstracker.R
-import com.example.fitnesstracker.extratools.customBorder
+import com.example.fitnesstracker.ui.extratools.customBorder
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
-import com.example.fitnesstracker.ui.theme.Orange
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +43,7 @@ fun MuscleCard(onClick: () -> Unit, @DrawableRes icon: Int, muscleName: String, 
         modifier = modifier
             .padding(bottom = 12.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth()
-            .height(72.dp),
+            .height(88.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ){
@@ -100,7 +92,7 @@ fun ExerciseCard(@DrawableRes icon: Int, exerciseName: String, modifier: Modifie
         modifier = modifier
             .padding(bottom = 12.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth()
-            .height(72.dp),
+            .height(80.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
     ) {
@@ -125,6 +117,7 @@ fun ExerciseCard(@DrawableRes icon: Int, exerciseName: String, modifier: Modifie
             Column (
                 modifier = Modifier
                     .weight(3f)
+                    .padding(start = 16.dp)
             ){
                 Text(
                     text = exerciseName,
@@ -164,7 +157,7 @@ fun WorkoutCard(workoutName: String, numberOfExercises: Int, onClick: () -> Unit
             }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = onClick,
                 modifier = Modifier
                     .fillMaxHeight()
                     .customBorder(start = 3f, color = MaterialTheme.colorScheme.primary),
@@ -200,6 +193,7 @@ fun Preview() {
     FitnessTrackerTheme {
         Surface {
             WorkoutCard(workoutName = "Push Workout", numberOfExercises = 6, onClick = { /*TODO*/ })
+            //ExerciseCard(icon = R.drawable.user, exerciseName = "ssss")
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,13 +21,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.fitnesstracker.R
+import com.example.fitnesstracker.ui.components.NavBar
+import com.example.fitnesstracker.ui.components.TopBar
+import com.example.fitnesstracker.ui.navigation.NavigationViewModel
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 import com.example.fitnesstracker.ui.theme.White
 
+
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    //EmptyHomeScreen(modifier)
-    HomeScreenWithContent(modifier)
+
+    EmptyHomeScreen(modifier)
+    //HomeScreenWithContent(modifier)
+
 }
 
 @Composable
@@ -85,7 +92,7 @@ fun HomeScreenWithContent( modifier: Modifier = Modifier) {
 fun HomeScreenPreview() {
     FitnessTrackerTheme {
         Surface {
-            HomeScreen()
+            //HomeScreen()
         }
     }
 }

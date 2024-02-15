@@ -1,5 +1,7 @@
 package com.example.fitnesstracker.ui.components
 
+import android.os.Debug
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -15,20 +17,33 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.fitnesstracker.FitnessTrackerScreen
+import androidx.navigation.NavHostController
+import com.example.fitnesstracker.FitnessTrackerAppScreens
 import com.example.fitnesstracker.R
 import com.example.fitnesstracker.ui.components.subComponents.Placement
 import com.example.fitnesstracker.ui.components.subComponents.Shadow
+import com.example.fitnesstracker.ui.navigation.NavigationViewModel
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
+import kotlin.math.log
 
 @Composable
-fun NavBar(onClickBtnExercise: () -> Unit, onClickBtnHome: () -> Unit, onClickBtnAbout: () -> Unit,modifier: Modifier = Modifier, currentScreen: FitnessTrackerScreen /*navBarViewModel: NavBarViewModel = NavBarViewModel()*/) {
+fun NavBar(
+    navigationViewModel: NavigationViewModel,
+    navHostController: NavHostController,
+    modifier: Modifier = Modifier,
+) {
+
+    val navigationState by navigationViewModel.navigationState.collectAsState()
+
+    Log.e("nav", "current screen state on recomposition start: ${navigationState.currentScreen}")
 
     Column (
         modifier = modifier
@@ -46,39 +61,55 @@ fun NavBar(onClickBtnExercise: () -> Unit, onClickBtnHome: () -> Unit, onClickBt
         ) {
 
             CustomIconButton(
-                screen = FitnessTrackerScreen.Exercises,
-                onClick = onClickBtnExercise,
+                onClick = {
+                    navHostController.navigate(FitnessTrackerAppScreens.Exercises.name)
+                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.Exercises)
+                    Log.e("nav", "current screen state: ${navigationState.currentScreen}")
+                },
                 icon = R.drawable.folder,
                 description = R.string.navExercisesBtnDescription,
-                currentScreen = currentScreen
+                currentScreen = navigationState.currentScreen,
+                screen = FitnessTrackerAppScreens.Exercises
             )
 
             CustomIconButton(
-                screen = FitnessTrackerScreen.Home,
-                onClick = onClickBtnHome,
+                onClick = {
+                    navHostController.navigate(FitnessTrackerAppScreens.Home.name)
+                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.Home)
+                    Log.e("nav", "current screen state: ${navigationState.currentScreen}")
+                },
                 icon = R.drawable.home,
                 description = R.string.navHomeBtnDescription,
-                currentScreen = currentScreen
+                currentScreen = navigationState.currentScreen,
+                screen = FitnessTrackerAppScreens.Home
             )
 
             CustomIconButton(
-                screen = FitnessTrackerScreen.About,
-                onClick = onClickBtnAbout,
+                onClick = {
+                    navHostController.navigate(FitnessTrackerAppScreens.About.name)
+                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.About)
+                    Log.e("nav", "current screen state: ${navigationState.currentScreen}")
+                },
                 icon = R.drawable.user,
                 description = R.string.navAboutBtnDescription,
-                currentScreen = currentScreen
+                currentScreen = navigationState.currentScreen,
+                screen = FitnessTrackerAppScreens.About
             )
         }
     }
+
+    Log.e("nav", "current screen state on recomposition end: ${navigationState.currentScreen}")
 
 }
 
 @Composable
 fun CustomIconButton(
-    screen: FitnessTrackerScreen, onClick: () -> Unit,
+    onClick: () -> Unit,
     @DrawableRes icon: Int,
     @StringRes description: Int,
-    currentScreen: FitnessTrackerScreen) {
+    currentScreen: FitnessTrackerAppScreens,
+    screen: FitnessTrackerAppScreens
+) {
     IconButton(
         onClick = onClick
     ) {
@@ -90,7 +121,6 @@ fun CustomIconButton(
 
         )
     }
-    //Log.println(Log.DEBUG,"navbar", "Current Screen: " + navbarState.currentScreen)
 }
 
 @Preview
@@ -102,3 +132,5 @@ fun NavBarPreview() {
         }
     }
 }
+
+//private enum class navButton()
