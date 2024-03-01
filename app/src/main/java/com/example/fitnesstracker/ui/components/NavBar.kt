@@ -62,8 +62,8 @@ fun NavBar(
 
             CustomIconButton(
                 onClick = {
-                    navHostController.navigate(FitnessTrackerAppScreens.Exercises.name)
-                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.Exercises)
+                    if (navHostController.currentDestination?.route != FitnessTrackerAppScreens.Exercises.name)
+                        navHostController.navigate(FitnessTrackerAppScreens.Exercises.name)
                     Log.e("nav", "current screen state: ${navigationState.currentScreen}")
                 },
                 icon = R.drawable.folder,
@@ -74,8 +74,8 @@ fun NavBar(
 
             CustomIconButton(
                 onClick = {
-                    navHostController.navigate(FitnessTrackerAppScreens.Home.name)
-                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.Home)
+                    if (navHostController.currentDestination?.route != FitnessTrackerAppScreens.Home.name)
+                        navHostController.navigate(FitnessTrackerAppScreens.Home.name)
                     Log.e("nav", "current screen state: ${navigationState.currentScreen}")
                 },
                 icon = R.drawable.home,
@@ -86,8 +86,8 @@ fun NavBar(
 
             CustomIconButton(
                 onClick = {
-                    navHostController.navigate(FitnessTrackerAppScreens.About.name)
-                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.About)
+                    if (navHostController.currentDestination?.route != FitnessTrackerAppScreens.About.name)
+                        navHostController.navigate(FitnessTrackerAppScreens.About.name)
                     Log.e("nav", "current screen state: ${navigationState.currentScreen}")
                 },
                 icon = R.drawable.user,

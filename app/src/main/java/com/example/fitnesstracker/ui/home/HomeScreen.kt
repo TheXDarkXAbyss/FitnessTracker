@@ -1,4 +1,4 @@
-package com.example.fitnesstracker.ui
+package com.example.fitnesstracker.ui.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,13 +6,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -20,24 +23,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.fitnesstracker.R
-import com.example.fitnesstracker.ui.components.NavBar
-import com.example.fitnesstracker.ui.components.TopBar
-import com.example.fitnesstracker.ui.navigation.NavigationViewModel
+import com.example.fitnesstracker.data.entity.Workout
+import com.example.fitnesstracker.ui.components.WorkoutCard
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 import com.example.fitnesstracker.ui.theme.White
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(onStartWorkout: (workoutId: Int) -> Unit,onCreateWorkoutClick: () -> Unit, modifier: Modifier = Modifier, homeScreenViewModel: HomeScreenViewModel = hiltViewModel()) {
 
-    EmptyHomeScreen(modifier)
-    //HomeScreenWithContent(modifier)
+    val workouts = homeScreenViewModel.getAllWorkouts().collectAsState(initial = emptyList())
+
+    if (workouts.value == emptyList<Workout>())
+        EmptyHomeScreen(onCreateWorkoutClick = onCreateWorkoutClick, modifier = modifier)
+    else
+        HomeScreenWithContent(onStartWorkout = onStartWorkout, onCreateWorkoutClick = onCreateWorkoutClick, workouts = workouts.value, modifier = modifier)
 
 }
 
 @Composable
-fun EmptyHomeScreen(modifier: Modifier = Modifier) {
+fun EmptyHomeScreen(onCreateWorkoutClick: () -> Unit, modifier: Modifier = Modifier) {
     Column (
         modifier = modifier
             .fillMaxSize(),
@@ -59,7 +67,7 @@ fun EmptyHomeScreen(modifier: Modifier = Modifier) {
         )
 
         Button(
-            onClick = { /*TODO*/ }
+            onClick = onCreateWorkoutClick
         ) {
             Row (
                 verticalAlignment = Alignment.CenterVertically
@@ -81,18 +89,42 @@ fun EmptyHomeScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HomeScreenWithContent( modifier: Modifier = Modifier) {
-    LazyColumn() {
-
+fun HomeScreenWithContent(onStartWorkout: (workoutId: Int) -> Unit, onCreateWorkoutClick: () -> Unit, workouts: List<Workout>, modifier: Modifier = Modifier) {
+    LazyColumn(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        items(workouts) {
+            WorkoutCard(
+                workoutName = it.name,
+                numberOfExercises = 5,
+                onClick = {
+                    onStartWorkout(it.id)
+                }
+            )
+        }
+        
+        item {
+            Button(
+                onClick = onCreateWorkoutClick
+            ) {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(painter = painterResource(R.drawable.add), contentDescription = null)
+                    Text(text = stringResource(R.string.btnAddNewWorkout))
+                }
+            }
+        }
     }
 }
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     FitnessTrackerTheme {
         Surface {
-            //HomeScreen()
+            //HomeScreenWithContent(onCreateWorkoutClick = {}, workouts = emptyList(), modifier = Modifier.fillMaxSize())
         }
     }
 }

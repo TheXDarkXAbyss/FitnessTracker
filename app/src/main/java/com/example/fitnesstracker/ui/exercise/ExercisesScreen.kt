@@ -2,79 +2,71 @@ package com.example.fitnesstracker.ui.exercise
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.fitnesstracker.R
-import com.example.fitnesstracker.data.Muscle
-import com.example.fitnesstracker.data.getExercisesByMuscle
-import com.example.fitnesstracker.data.getNumberOfExercisesByMuscle
+import com.example.fitnesstracker.data.dao.MusclesWithNumberOfExercises
+import com.example.fitnesstracker.data.entity.Exercise
+import com.example.fitnesstracker.data.entity.Muscle
 import com.example.fitnesstracker.ui.components.ExerciseCard
 import com.example.fitnesstracker.ui.components.MuscleCard
-import com.example.fitnesstracker.ui.components.NavBar
-import com.example.fitnesstracker.ui.components.TopBar
-import com.example.fitnesstracker.ui.navigation.NavigationViewModel
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 
 @Composable
-fun ExercisesScreen(exerciseScreenViewModel: ExerciseScreenViewModel = viewModel<ExerciseScreenViewModel>(), modifier: Modifier = Modifier) {
+fun ExercisesScreen(modifier: Modifier = Modifier, exerciseScreenViewModel: ExerciseScreenViewModel = hiltViewModel()) {
 
-    Content(exerciseScreenViewModel, modifier = modifier)
+    val screenState = exerciseScreenViewModel.exercisesScreenState.collectAsStateWithLifecycle()
+
+    val allMuscles = exerciseScreenViewModel.musclesWithNumberOfExercises.collectAsState(initial = emptyList())
+
+    val exercises = exerciseScreenViewModel.getAllExercisesByMuscles(muscle = screenState.value.selectedMuscle).collectAsState(initial = emptyList())
+
+    if(screenState.value.selectedMuscle != Muscle()){
+        BackHandler {
+            exerciseScreenViewModel.setSelectedMuscle(Muscle())
+        }
+    }
+
+    if (screenState.value.selectedMuscle == Muscle())
+        ContentMuscles(exerciseScreenViewModel = exerciseScreenViewModel , allMusclesState = allMuscles, modifier)
+    else
+        ContentExercises(exerciseScreenViewModel = exerciseScreenViewModel, exercises = exercises, modifier)
 
 }
 
 @Composable
-private fun Content(exerciseScreenViewModel: ExerciseScreenViewModel, modifier: Modifier = Modifier) {
+fun ContentMuscles(exerciseScreenViewModel: ExerciseScreenViewModel, allMusclesState:  State<List<MusclesWithNumberOfExercises>>, modifier: Modifier = Modifier) {
 
-    val exerciseScreenState by exerciseScreenViewModel.exerciseScreenState.collectAsState()
-
-    if (exerciseScreenState.selectedMuscle != null) {
-        BackHandler {
-            exerciseScreenViewModel.setSelectedMuscle(null)
+    LazyColumn(modifier = modifier.fillMaxSize()) {
+        items(allMusclesState.value) {
+            MuscleCard(
+                onClick = {
+                          exerciseScreenViewModel.setSelectedMuscle(it.muscle)
+                },
+                icon = R.drawable.user,
+                muscleName = it.muscle.name,
+                numberOfExercises = it.numberOfExercises
+            )
         }
-    }
-
-    LazyColumn(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(top = 16.dp)
-    ) {
-        val muscles = Muscle.entries.toTypedArray()
-
-        if (exerciseScreenState.selectedMuscle == null) {
-            items(muscles) {
-                MuscleCard(
-                    {
-                        exerciseScreenViewModel.setSelectedMuscle(it)
-                    },
-                    icon = R.drawable.user,
-                    muscleName = it.name,
-                    numberOfExercises = getNumberOfExercisesByMuscle(it)
-                )
-            }
-        }
-        else {
-
-            val exercises = getExercisesByMuscle(exerciseScreenState.selectedMuscle)
-            items(exercises) {
-                ExerciseCard(icon = R.drawable.user, exerciseName = it.name)
-            }
-        }
-
     }
 }
 
-
+@Composable
+fun ContentExercises(exerciseScreenViewModel: ExerciseScreenViewModel, exercises: State<List<Exercise>>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
+        items(exercises.value) {
+            ExerciseCard(icon = R.drawable.user, exerciseName = it.name)
+        }
+    }
+}
 
 @Preview
 @Composable
