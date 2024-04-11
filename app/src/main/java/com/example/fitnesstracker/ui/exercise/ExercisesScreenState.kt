@@ -6,5 +6,4 @@ import kotlinx.coroutines.flow.StateFlow
 
 data class ExercisesScreenState(
     val selectedMuscle: Muscle = Muscle(),
-    //val allMuscles: StateFlow<List<Muscle>> = MutableStateFlow(emptyList())
 )

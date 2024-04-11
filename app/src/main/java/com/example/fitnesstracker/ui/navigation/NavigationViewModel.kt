@@ -1,5 +1,6 @@
 package com.example.fitnesstracker.ui.navigation
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.fitnesstracker.FitnessTrackerAppScreens
@@ -10,18 +11,11 @@ import kotlinx.coroutines.flow.update
 
 class NavigationViewModel(): ViewModel() {
 
-    private val _navigationState = MutableStateFlow(NavigationState())
-    val navigationState: StateFlow<NavigationState> = _navigationState.asStateFlow()
-
+    var currentScreen = mutableStateOf<FitnessTrackerAppScreens>(FitnessTrackerAppScreens.Home)
+        private set
 
     fun updateCurrentScreen(currentScreen: FitnessTrackerAppScreens) {
-
-        _navigationState.update {
-            it.copy(
-                currentScreen = currentScreen
-            )
-        }
-
+        this.currentScreen.value = currentScreen
     }
 
 }

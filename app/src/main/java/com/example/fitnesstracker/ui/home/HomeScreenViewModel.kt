@@ -17,5 +17,4 @@ class HomeScreenViewModel @Inject constructor(private val homeRepository: HomeRe
 
     fun getAllWorkouts() = homeRepository.getAllWorkouts()
 
-
 }

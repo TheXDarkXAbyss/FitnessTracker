@@ -5,7 +5,7 @@ import java.util.Date
 
 class RoomConverters {
 
-    @TypeConverter
+    @TypeConverter // Marks a method as a type converter.
     fun convertDateToLong(date: Date): Long {
         return date.time
     }

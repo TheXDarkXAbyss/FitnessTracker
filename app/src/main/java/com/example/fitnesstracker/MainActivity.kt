@@ -1,9 +1,12 @@
 package com.example.fitnesstracker
 
+import android.app.Application
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,10 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.fitnesstracker.ui.home.workout.WorkoutScreenViewModel
 import com.example.fitnesstracker.ui.theme.FitnessTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -33,3 +38,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@HiltAndroidApp
+class FTApp: Application()

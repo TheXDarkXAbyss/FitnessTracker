@@ -11,7 +11,8 @@ import com.example.fitnesstracker.data.entity.ExercisesSets
 interface ExercisesSetDao {
 
     @Query("""
-        SELECT ES.id, ES.workout_exercise_id, ES.exercise_id, ES.session_id, ES.set_number, ES.reps, ES.weight, ES.difficulty FROM exercises_sets AS ES
+        SELECT ES.id, ES.workout_exercise_id, ES.exercise_id, ES.session_id, ES.set_number, ES.reps, ES.weight, ES.difficulty 
+        FROM exercises_sets AS ES
         INNER JOIN workout_exercises AS WE ON WE.id = ES.workout_exercise_id
 		WHERE WE.workout_id = :workoutId AND ES.session_id = :sessionId
     """)

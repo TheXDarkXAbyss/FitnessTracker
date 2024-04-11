@@ -19,7 +19,7 @@ import com.example.fitnesstracker.data.entity.Session
 import com.example.fitnesstracker.data.entity.Workout
 import com.example.fitnesstracker.data.entity.WorkoutExercises
 
-@Database(
+@Database( // Marks the class as a RoomDatabase
     entities = [
         /* Add your entities here, example: Item::Class*/
         Muscle::class,
@@ -29,10 +29,10 @@ import com.example.fitnesstracker.data.entity.WorkoutExercises
         WorkoutExercises::class,
         ExercisesSets::class
     ],
-    version = 3,
+    version = 3, // the version of the database. each time you update the
     exportSchema = false
 )
-@TypeConverters(RoomConverters::class)
+@TypeConverters(RoomConverters::class) // here you can specify the type converters that Room can use
 abstract class FitnessTrackerDatabase: RoomDatabase() {
 
     /* Add your Dao classes here
@@ -54,7 +54,7 @@ abstract class FitnessTrackerDatabase: RoomDatabase() {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, FitnessTrackerDatabase::class.java, "item_database")
                     .fallbackToDestructiveMigration()
-                    .createFromAsset("database/fitness_tracker_db.db")
+                    .createFromAsset("database/fitness_tracker_db.db") // this allows to have pre-packaged data in the database such as muscles and exercises
                     .build()
                     .also { Instance = it }
             }

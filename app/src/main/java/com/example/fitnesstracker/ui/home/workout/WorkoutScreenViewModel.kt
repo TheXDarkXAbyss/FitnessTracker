@@ -80,6 +80,7 @@ class WorkoutScreenViewModel @Inject constructor(private val workoutScreenReposi
         if (txtRepsValues.isNotEmpty()){
             isSetsDialogOpen.value = true
             return
+
         }
 
         // the code below will only execute one time

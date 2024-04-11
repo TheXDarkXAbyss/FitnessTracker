@@ -1,5 +1,8 @@
 package com.example.fitnesstracker
 
+import android.app.Application
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +25,7 @@ import com.example.fitnesstracker.ui.exercise.ExercisesScreen
 import com.example.fitnesstracker.ui.home.createworkout.CreateWorkoutScreen
 import com.example.fitnesstracker.ui.home.workout.WorkoutScreen
 import com.example.fitnesstracker.ui.navigation.NavigationViewModel
+import dagger.hilt.android.HiltAndroidApp
 
 enum class FitnessTrackerAppScreens{
     Home,
@@ -31,10 +35,11 @@ enum class FitnessTrackerAppScreens{
     Workout,
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun FitnessTrackerApp(navController: NavHostController = rememberNavController(), navigationViewModel: NavigationViewModel = viewModel<NavigationViewModel>()) {
 
-    val currentScreen = navigationViewModel.navigationState.collectAsState().value.currentScreen
+    val currentScreen = navigationViewModel.currentScreen.value
 
     Scaffold (
         topBar = {
@@ -129,6 +134,4 @@ fun FitnessTrackerApp(navController: NavHostController = rememberNavController()
 
         }
     }
-
-
 }
