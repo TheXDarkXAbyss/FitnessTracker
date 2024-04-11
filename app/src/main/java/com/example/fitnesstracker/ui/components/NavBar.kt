@@ -41,9 +41,9 @@ fun NavBar(
     modifier: Modifier = Modifier,
 ) {
 
-    val navigationState by navigationViewModel.navigationState.collectAsState()
+    val currentScreen = navigationViewModel.currentScreen.value
 
-    Log.e("nav", "current screen state on recomposition start: ${navigationState.currentScreen}")
+    Log.e("nav", "current screen state on recomposition start: $currentScreen")
 
     Column (
         modifier = modifier
@@ -62,43 +62,43 @@ fun NavBar(
 
             CustomIconButton(
                 onClick = {
-                    navHostController.navigate(FitnessTrackerAppScreens.Exercises.name)
-                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.Exercises)
-                    Log.e("nav", "current screen state: ${navigationState.currentScreen}")
+                    if (navHostController.currentDestination?.route != FitnessTrackerAppScreens.Exercises.name)
+                        navHostController.navigate(FitnessTrackerAppScreens.Exercises.name)
+                    Log.e("nav", "current screen state: $currentScreen")
                 },
                 icon = R.drawable.folder,
                 description = R.string.navExercisesBtnDescription,
-                currentScreen = navigationState.currentScreen,
+                currentScreen = currentScreen,
                 screen = FitnessTrackerAppScreens.Exercises
             )
 
             CustomIconButton(
                 onClick = {
-                    navHostController.navigate(FitnessTrackerAppScreens.Home.name)
-                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.Home)
-                    Log.e("nav", "current screen state: ${navigationState.currentScreen}")
+                    if (navHostController.currentDestination?.route != FitnessTrackerAppScreens.Home.name)
+                        navHostController.navigate(FitnessTrackerAppScreens.Home.name)
+                    Log.e("nav", "current screen state: $currentScreen")
                 },
                 icon = R.drawable.home,
                 description = R.string.navHomeBtnDescription,
-                currentScreen = navigationState.currentScreen,
+                currentScreen = currentScreen,
                 screen = FitnessTrackerAppScreens.Home
             )
 
             CustomIconButton(
                 onClick = {
-                    navHostController.navigate(FitnessTrackerAppScreens.About.name)
-                    navigationViewModel.updateCurrentScreen(FitnessTrackerAppScreens.About)
-                    Log.e("nav", "current screen state: ${navigationState.currentScreen}")
+                    if (navHostController.currentDestination?.route != FitnessTrackerAppScreens.About.name)
+                        navHostController.navigate(FitnessTrackerAppScreens.About.name)
+                    Log.e("nav", "current screen state: $currentScreen")
                 },
                 icon = R.drawable.user,
                 description = R.string.navAboutBtnDescription,
-                currentScreen = navigationState.currentScreen,
+                currentScreen = currentScreen,
                 screen = FitnessTrackerAppScreens.About
             )
         }
     }
 
-    Log.e("nav", "current screen state on recomposition end: ${navigationState.currentScreen}")
+    Log.e("nav", "current screen state on recomposition end: $currentScreen")
 
 }
 

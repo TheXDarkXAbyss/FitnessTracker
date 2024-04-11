@@ -3,9 +3,16 @@
 
     <string name="empty_homeScreenTitle">You don’t have any workouts currently</string>
     <string name="empty_homeScreenSubtitle">Create your first workout to start training</string>
+    <string name="addFirstExercise">Add your first exercise</string>
+    <string name="createWorkout">Create a Workout</string>
+
 
     <string name="btnCreateFirstWorkout">Create your first workout</string>
     <string name="btnAddNewWorkout">Add New Workout</string>
+    <string name="btnAddExercises">Add an Exercise</string>
+    <string name="btnSave">Save</string>
+    <string name="btnAdd">Add</string>
+    <string name="btnFinish">Finish</string>
 
     <string name="btnStartWorkout">Start</string>
 
